@@ -161,11 +161,11 @@
 
         var options = {
           title: 'Histogram',
-          width: 800,
-          height: 480,
+          width: 1200,
+          height: 800,
           hAxis: {title: 'Percentile', minValue: 0, logScale: true, ticks:ticks },
           vAxis: {title: 'Latency (µs)', minValue: 0 },
-          legend: {position: 'bottom'}
+          legend: {position: 'top', maxLines: 100}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -196,8 +196,24 @@
       }
     </script>
     <script type="text/javascript">
+
+
+        function cleanName(name) {
+
+            if (!name) return name;
+
+            name =  name.replace('.hgrm', '')
+
+            if (name.indexOf(':') >= 0) {
+                return name.substring(name.lastIndexOf('.') + 1);
+            }
+            return name;
+        }
+
+
         function appendDataSeries(histo, name, dataSeries) {
           var series;
+          name = cleanName(name);
           var seriesCount;
           if (dataSeries.length == 0) {
             series = [ ['X', name] ];
